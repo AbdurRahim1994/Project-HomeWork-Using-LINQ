@@ -20,7 +20,14 @@ namespace PeopleDeskHomeWork.Services
         {
             try
             {
-                //if(from itm in _context.TblItems where obj.items)
+                var exist = await (from itm in _context.TblItems
+                                   where obj.items.Select(x => x.StrItemName.ToLower()).ToList().Equals(itm.StrItemName)
+                                   select itm.StrItemName).ToListAsync();
+
+                if (exist != null)
+                {
+                    throw new Exception($"duplicate these items {exist}");
+                }
                 List<TblItem> editList = new List<TblItem>();
                 List<TblItem> objList = new List<TblItem>();
                 foreach (var item in obj.items)
