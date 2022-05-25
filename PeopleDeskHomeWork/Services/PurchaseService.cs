@@ -171,12 +171,12 @@ namespace PeopleDeskHomeWork.Services
                     await _context.TblPurchaseDetails.AddRangeAsync(createPurchaseDetails);
                     await _context.SaveChangesAsync();
 
-                    foreach (var itm in obj.purchaseDetails)
-                    {
-                        var check = await _context.TblItems.Where(x => x.IntItemId == itm.IntItemId && x.IsActive == true).FirstOrDefaultAsync();
+                    //foreach (var itm in createPurchaseDetails)
+                    //{
+                    //    var check = await _context.TblItems.Where(x => x.IntItemId == itm.IntItemId && x.IsActive == true).FirstOrDefaultAsync();
 
-                        check.NumStockQuantity += itm.IntItemQuantity;
-                    }
+                    //    check.NumStockQuantity += itm.NumItemQuantity;
+                    //}
 
                     //List<TblItem> stock = new List<TblItem>();
                     //foreach (var stockItem in createPurchaseDetails)

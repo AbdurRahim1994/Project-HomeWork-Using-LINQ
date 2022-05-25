@@ -8,7 +8,7 @@ namespace PeopleDeskHomeWork.Models.Data.Entity
         public long IntPurchaseDetailsId { get; set; }
         public long IntPurchaseId { get; set; }
         public long IntItemId { get; set; }
-        public string StrItemName { get; set; } = null!;
+        public string StrItemName { get; set; } 
         public decimal NumItemQuantity { get; set; }
         public decimal NumUnitPrice { get; set; }
         public decimal NumTotalPrice { get; set; }
