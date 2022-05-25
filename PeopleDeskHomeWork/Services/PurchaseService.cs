@@ -171,22 +171,29 @@ namespace PeopleDeskHomeWork.Services
                     await _context.TblPurchaseDetails.AddRangeAsync(createPurchaseDetails);
                     await _context.SaveChangesAsync();
 
-                    List<TblItem> stock = new List<TblItem>();
-                    foreach (var stockItem in createPurchaseDetails)
+                    foreach (var itm in obj.purchaseDetails)
                     {
-                        TblItem itm = new TblItem
-                        {
-                            IntItemId = stockItem.IntItemId,
-                            StrItemName = stockItem.StrItemName,
-                            NumStockQuantity = stockItem.NumItemQuantity,
-                            NumStockPrice = stockItem.NumUnitPrice,
-                            NumTotalPrice=stockItem.NumUnitPrice*stockItem.NumItemQuantity,
-                            IsActive = true
-                        };
-                        stock.Add(itm);
+                        var check = await _context.TblItems.Where(x => x.IntItemId == itm.IntItemId && x.IsActive == true).FirstOrDefaultAsync();
+
+                        check.NumStockQuantity += itm.IntItemQuantity;
                     }
-                    await _context.TblItems.AddRangeAsync(stock);
-                    await _context.SaveChangesAsync();
+
+                    //List<TblItem> stock = new List<TblItem>();
+                    //foreach (var stockItem in createPurchaseDetails)
+                    //{
+                    //    TblItem itm = new TblItem
+                    //    {
+                    //        //IntItemId = stockItem.IntItemId,
+                    //        StrItemName = stockItem.StrItemName,
+                    //        NumStockQuantity = stockItem.NumItemQuantity,
+                    //        NumStockPrice = stockItem.NumUnitPrice,
+                    //        NumTotalPrice=stockItem.NumUnitPrice*stockItem.NumItemQuantity,
+                    //        IsActive = true
+                    //    };
+                    //    stock.Add(itm);
+                    //}
+                    //await _context.TblItems.AddRangeAsync(stock);
+                    //await _context.SaveChangesAsync();
                 }
 
                 res.Message = "Purchase Order Created Successfully";

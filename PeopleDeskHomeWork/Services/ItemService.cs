@@ -26,61 +26,78 @@ namespace PeopleDeskHomeWork.Services
 
                 if (exist != null)
                 {
-                    throw new Exception($"duplicate these items {exist}");
+                    //throw new Exception($"duplicate these items");
+                    res.Message += $"duplicate these items {exist}";
                 }
+                
                 List<TblItem> editList = new List<TblItem>();
                 List<TblItem> objList = new List<TblItem>();
                 foreach (var item in obj.items)
                 {
                     if (item.IntItemId > 0)
                     {
-                        var isExists = await _context.TblItems.Where(x => x.IntItemId != item.IntItemId && x.StrItemName == item.StrItemName).FirstOrDefaultAsync();
-                        if (isExists != null)
+                        var data = await _context.TblItems.Where(x => x.IntItemId == item.IntItemId && x.IsActive == true).FirstOrDefaultAsync();
+                        if (data != null)
                         {
-                            res.Message = "Item Name Already Exists";
-                        }
-                        else
-                        {
-                            var data = await _context.TblItems.Where(x => x.IntItemId == item.IntItemId && x.IsActive == true).FirstOrDefaultAsync();
-                            if (data != null)
-                            {
-                                data.StrItemName = item.StrItemName;
-                                data.NumStockQuantity = item.NumStockQuantity;
-                                data.NumStockPrice = item.NumUnitPrice;
-                                data.NumTotalPrice = item.NumStockQuantity * item.NumUnitPrice;
+                            data.StrItemName = item.StrItemName;
+                            data.NumStockQuantity = item.NumStockQuantity;
+                            data.NumStockPrice = item.NumUnitPrice;
+                            data.NumTotalPrice = item.NumStockQuantity * item.NumUnitPrice;
 
-                                editList.Add(data);
-                            }
-                            _context.TblItems.UpdateRange(editList);
-                            await _context.SaveChangesAsync();
+                            editList.Add(data);
                         }
                         
+                        //var isExists = await _context.TblItems.Where(x => x.IntItemId != item.IntItemId && x.StrItemName == item.StrItemName).FirstOrDefaultAsync();
+                        //if (isExists != null)
+                        //{
+                        //    res.Message = "Item Name Already Exists";
+                        //}
+                        //else
+                        //{
+
+                        //}
+
                     }
                     else
                     {
-                        var isExists = await _context.TblItems.Where(x => x.StrItemName == item.StrItemName).FirstOrDefaultAsync();
-                        if (isExists != null)
+                        TblItem data = new TblItem
                         {
-                            res.Message = "Item Name Already Exists";
-                        }
-                        else
-                        {
-                            TblItem data = new TblItem
-                            {
-                                StrItemName = item.StrItemName,
-                                NumStockQuantity = item.NumStockQuantity,
-                                IsActive = true
-                            };
-                            objList.Add(data);
-                        }
+                            StrItemName = item.StrItemName,
+                            NumStockQuantity = item.NumStockQuantity,
+                            NumStockPrice=item.NumUnitPrice,
+                            NumTotalPrice=item.NumTotalPrice,
+                            IsActive = true
+                        };
+                        objList.Add(data);
+                        
+                        //var isExists = await _context.TblItems.Where(x => x.StrItemName == item.StrItemName).FirstOrDefaultAsync();
+                        //if (isExists != null)
+                        //{
+                        //    res.Message = "Item Name Already Exists";
+                        //}
+                        //else
+                        //{
+
+                        //}
 
                     }
                 }
-                await _context.TblItems.AddRangeAsync(objList);
-                await _context.SaveChangesAsync();
+                if (objList.Count > 0)
+                {
+                    await _context.TblItems.AddRangeAsync(objList);
+                    await _context.SaveChangesAsync();
 
-                res.Message = "Created Successfully";
+                    res.Message += $"Created Successfully with item names {objList.Select(x => x.StrItemName)}";
+                }
+                else if (editList.Count > 0)
+                {
+                    _context.TblItems.UpdateRange(editList);
+                    await _context.SaveChangesAsync();
+
+                    res.Message += $"Updated Successfully with item names {editList.Select(x => x.StrItemName)}";
+                }
                 return res;
+                
             }
             catch (Exception ex)
             {
