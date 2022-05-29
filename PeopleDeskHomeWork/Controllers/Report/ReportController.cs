@@ -34,5 +34,19 @@ namespace PeopleDeskHomeWork.Controllers.Report
         {
             return Ok(await _reportService.SalesVsPurchase());
         }
+
+        [HttpGet]
+        [Route("GetDailySalesVsPurchase")]
+        public async Task<IActionResult> GetDailySalesVsPurchase()
+        {
+            return Ok(await _reportService.GetDailySalesVsPurchase());
+        }
+
+        [HttpGet]
+        [Route("GetSalesVsPurchaseWithGivenColumn")]
+        public async Task<IActionResult> GetSalesVsPurchaseWithGivenColumn(DateTime userDate)
+        {
+            return Ok(await _reportService.GetSalesVsPurchaseWithGivenColumn(userDate));
+        }
     }
 }
