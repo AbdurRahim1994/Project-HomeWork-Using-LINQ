@@ -4,6 +4,7 @@ using PeopleDeskHomeWorkUsingSQL.Models.Data;
 using PeopleDeskHomeWorkUsingSQL.Models.ViewModels.Item;
 using PeopleDeskHomeWorkUsingSQL.Services.Interfaces.Item;
 using System.Data;
+using System.Text.Json;
 
 namespace PeopleDeskHomeWorkUsingSQL.Services.Item
 {
@@ -53,6 +54,45 @@ namespace PeopleDeskHomeWorkUsingSQL.Services.Item
                         return res;
                     }
                     
+                }
+            }
+            catch (Exception ex)
+            {
+
+                res.Message = ex.Message;
+                res.StatusCode = 500;
+                return res;
+            }
+        }
+
+        public async Task<MessageHelper> CreateItemList(List<ItemViewModel> obj)
+        {
+            try
+            {
+                using(SqlConnection connection=new SqlConnection(Connection.iPEOPLE_HCM))
+                {
+                    string jsonString = JsonSerializer.Serialize(obj);
+                    string sql = "dbo.sprItemListCRUD";
+                    using(SqlCommand cmd=new SqlCommand(sql, connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        //cmd.Parameters.AddWithValue("@strPart", obj.Select(x => x.StrPart).FirstOrDefault());
+                        //cmd.Parameters.AddWithValue("@AutoId", obj.Select(x => x.IntAutoId).FirstOrDefault());
+                        cmd.Parameters.AddWithValue("@jsonString", jsonString);
+
+                        connection.Open();
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(dt);
+                        }
+                        connection.Close();
+
+                        res.Message = Convert.ToString(dt.Rows[0]["returnMessage"]);
+                        res.StatusCode = Convert.ToInt32(dt.Rows[0]["returnStatus"]);
+                        res.AutoId = string.IsNullOrEmpty(dt.Rows[0]["AutoId"].ToString()) ? 0 : Convert.ToInt32(dt.Rows[0]["AutoId"]);
+                        res.AutoName = string.IsNullOrEmpty(dt.Rows[0]["AutoName"].ToString()) ? "" : Convert.ToString(dt.Rows[0]["AutoName"]);
+                        return res;
+                    }
                 }
             }
             catch (Exception ex)
