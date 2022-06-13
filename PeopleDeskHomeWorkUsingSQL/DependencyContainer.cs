@@ -1,7 +1,9 @@
 ﻿using PeopleDeskHomeWorkUsingSQL.Services.Interfaces.Item;
 using PeopleDeskHomeWorkUsingSQL.Services.Interfaces.Partner;
+using PeopleDeskHomeWorkUsingSQL.Services.Interfaces.Purchase;
 using PeopleDeskHomeWorkUsingSQL.Services.Item;
 using PeopleDeskHomeWorkUsingSQL.Services.Partner;
+using PeopleDeskHomeWorkUsingSQL.Services.Purchase;
 
 namespace PeopleDeskHomeWorkUsingSQL
 {
@@ -11,6 +13,7 @@ namespace PeopleDeskHomeWorkUsingSQL
         {
             services.AddTransient<IPartnerService, PartnerService>();
             services.AddTransient<IItemService, ItemService>();
+            services.AddTransient<IPurchaseService, PurchaseService>();
         }
     }
 }
