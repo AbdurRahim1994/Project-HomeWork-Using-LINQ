@@ -17,6 +17,7 @@ namespace PeopleDeskHomeWorkUsingSQL.Models.Data
         {
         }
 
+        public virtual DbSet<TblAllMenu> TblAllMenus { get; set; } = null!;
         public virtual DbSet<TblItem> TblItems { get; set; } = null!;
         public virtual DbSet<TblPartner> TblPartners { get; set; } = null!;
         public virtual DbSet<TblPartnerType> TblPartnerTypes { get; set; } = null!;
@@ -36,6 +37,31 @@ namespace PeopleDeskHomeWorkUsingSQL.Models.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<TblAllMenu>(entity =>
+            {
+                entity.HasKey(e => e.IntMenuId);
+
+                entity.ToTable("tblAllMenu");
+
+                entity.Property(e => e.IntMenuId).HasColumnName("intMenuId");
+
+                entity.Property(e => e.IntMenuLabelId).HasColumnName("intMenuLabelId");
+
+                entity.Property(e => e.IntParentMenuId).HasColumnName("intParentMenuId");
+
+                entity.Property(e => e.IsActive).HasColumnName("isActive");
+
+                entity.Property(e => e.IsExpandable).HasColumnName("isExpandable");
+
+                entity.Property(e => e.StrMenuName)
+                    .HasMaxLength(250)
+                    .HasColumnName("strMenuName");
+
+                entity.Property(e => e.StrTo)
+                    .HasMaxLength(500)
+                    .HasColumnName("strTo");
+            });
+
             modelBuilder.Entity<TblItem>(entity =>
             {
                 entity.HasKey(e => e.IntItemId);
