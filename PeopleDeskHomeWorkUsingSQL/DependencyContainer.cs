@@ -2,10 +2,12 @@
 using PeopleDeskHomeWorkUsingSQL.Services.Interfaces.MenuPermission;
 using PeopleDeskHomeWorkUsingSQL.Services.Interfaces.Partner;
 using PeopleDeskHomeWorkUsingSQL.Services.Interfaces.Purchase;
+using PeopleDeskHomeWorkUsingSQL.Services.Interfaces.Sales;
 using PeopleDeskHomeWorkUsingSQL.Services.Item;
 using PeopleDeskHomeWorkUsingSQL.Services.MenuPermission;
 using PeopleDeskHomeWorkUsingSQL.Services.Partner;
 using PeopleDeskHomeWorkUsingSQL.Services.Purchase;
+using PeopleDeskHomeWorkUsingSQL.Services.Sales;
 
 namespace PeopleDeskHomeWorkUsingSQL
 {
@@ -17,6 +19,7 @@ namespace PeopleDeskHomeWorkUsingSQL
             services.AddTransient<IItemService, ItemService>();
             services.AddTransient<IPurchaseService, PurchaseService>();
             services.AddTransient<IMenuPermissionServicecs, MenuPermissionService>();
+            services.AddTransient<ISalesService, SalesService>();
         }
     }
 }
