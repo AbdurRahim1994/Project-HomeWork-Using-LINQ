@@ -24,7 +24,7 @@ namespace PeopleDeskHomeWorkUsingSQL.Controllers.Item
 
         [HttpPost]
         [Route("CreateItemList")]
-        public async Task<IActionResult> CreateItemList(List<ItemViewModel> obj)
+        public async Task<IActionResult> CreateItemList(List<ItemViewModelJson> obj)
         {
             return Ok(await _itemService.CreateItemList(obj));
         }

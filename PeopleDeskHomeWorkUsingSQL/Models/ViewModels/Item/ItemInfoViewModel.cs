@@ -18,4 +18,19 @@
         public long? IntUpdatedBy { get; set; }
         public DateTime? DteUpdatedAt { get; set; }
     }
+    public class ItemViewModelJson
+    {
+        public string StrPart { get; set; }
+        public long IntAutoId { get; set; }
+        //public long intItemId { get; set; }
+        public string strItemName { get; set; } = null!;
+        public decimal numStockQuantity { get; set; }
+        public decimal numStockPrice { get; set; }
+        public decimal numTotalPrice { get; set; }
+        public bool isActive { get; set; }
+        public long intCreatedBy { get; set; }
+        public DateTime dteCreatedAt { get; set; }
+        public long? intUpdatedBy { get; set; }
+        public DateTime? dteUpdatedAt { get; set; }
+    }
 }

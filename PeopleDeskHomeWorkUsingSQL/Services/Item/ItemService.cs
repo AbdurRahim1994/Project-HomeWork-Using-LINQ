@@ -65,7 +65,7 @@ namespace PeopleDeskHomeWorkUsingSQL.Services.Item
             }
         }
 
-        public async Task<MessageHelper> CreateItemList(List<ItemViewModel> obj)
+        public async Task<MessageHelper> CreateItemList(List<ItemViewModelJson> obj)
         {
             try
             {
@@ -76,8 +76,8 @@ namespace PeopleDeskHomeWorkUsingSQL.Services.Item
                     using(SqlCommand cmd=new SqlCommand(sql, connection))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        //cmd.Parameters.AddWithValue("@strPart", obj.Select(x => x.StrPart).FirstOrDefault());
-                        //cmd.Parameters.AddWithValue("@AutoId", obj.Select(x => x.IntAutoId).FirstOrDefault());
+                        cmd.Parameters.AddWithValue("@strPart", obj.Select(x=>x.StrPart).FirstOrDefault());
+                        cmd.Parameters.AddWithValue("@AutoId", obj.Select(x=>x.IntAutoId).FirstOrDefault());
                         cmd.Parameters.AddWithValue("@jsonString", jsonString);
 
                         connection.Open();
