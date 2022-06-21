@@ -13,18 +13,18 @@
     }
     public class PurchaseDetailsViewModel
     {
-        public long IntPurchaseDetailsId { get; set; }
-        public long IntPurchaseId { get; set; }
-        public long IntItemId { get; set; }
-        public string StrItemName { get; set; } = null!;
-        public decimal NumItemQuantity { get; set; }
-        public decimal NumUnitPrice { get; set; }
-        public decimal NumTotalPrice { get; set; }
-        public bool IsActive { get; set; }
-        public long IntCreatedBy { get; set; }
-        public DateTime DteCreatedAt { get; set; }
-        public long? IntUpdatedBy { get; set; }
-        public DateTime? DteUpdatedAt { get; set; }
+        //public long IntPurchaseDetailsId { get; set; }
+        //public long IntPurchaseId { get; set; }
+        public long intItemId { get; set; }
+        public string strItemName { get; set; } = null!;
+        public decimal numItemQuantity { get; set; }
+        public decimal numUnitPrice { get; set; }
+        public decimal numTotalPrice { get; set; }
+        public bool isActive { get; set; }
+        public long intCreatedBy { get; set; }
+        public DateTime dteCreatedAt { get; set; }
+        public long? intUpdatedBy { get; set; }
+        public DateTime? dteUpdatedAt { get; set; }
     }
     public class PurchaseOrderCommonViewModel
     {
